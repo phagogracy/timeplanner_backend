@@ -54,7 +54,7 @@ DEFAULT_APPS = [
 
 SDK_APPS = []
 
-LOCAL_APPS = ["core", "user"]
+LOCAL_APPS = ["core", "user", "planner"]
 
 THIRD_PARTY_APPS = [
     "corsheaders",
