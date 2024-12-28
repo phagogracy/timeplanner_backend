@@ -62,26 +62,16 @@ class UserSerializer(WritableNestedModelSerializer):
         model = User
         fields = (
             "id",
+            "username",
             "email",
             "is_staff",
-            "profile",
             "password",
         )
 
-    def create(self, validated_data: dict):
-        profile = None
-        if "profile" in validated_data:
-            profile = validated_data.pop("profile")
-        user = User.objects.create_user(**validated_data)
-        if profile:
-            user.profile = Profile.objects.create(**profile)
-            user.save()
-        return user
 
-
-class UserShortProfileSerializer(UserSerializer):
+class UserShortSerializer(UserSerializer):
     """
-    Serializer for user short profile
+    Serializer for user
     """
 
     class Meta:
@@ -89,18 +79,13 @@ class UserShortProfileSerializer(UserSerializer):
         Meta Class
         """
 
-        model = UserSerializer.Meta.model
-
-        fields = tuple(
-            set(copy.deepcopy(UserSerializer.Meta.fields))
-            - set(
-                [
-                    "id",
-                    "email",
-                    "username",
-                ]
-            )
+        model = User
+        fields = (
+            "id",
+            "username",
+            "email"
         )
+
 
 
 class RegisterUserSerializer(UserSerializer):
